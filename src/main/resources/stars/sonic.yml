@@ -34,8 +34,8 @@ item:
     - ""
     - "{abilities}"
     - ""
-    - "<#71717a>Right-click <#a1a1aa>cast · <#71717a>F <#a1a1aa>switch"
     - "<#52525b>Bound to {owner}"
+    - "{controls}"
 
 # Icon used in menus (defaults to the item when omitted).
 icon:

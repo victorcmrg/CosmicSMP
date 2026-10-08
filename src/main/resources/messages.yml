@@ -39,17 +39,26 @@ format:
     primary-unlocked: "<#86efac>✔ <#e4e4e7>{name}"
     primary-selected: "<#fde68a>▶ <bold>{name}</bold>"
     primary-locked: "<#52525b>✖ {name}"
+    # last line of every star item ({controls} in stars/*.yml)
+    controls: "<#71717a>F to cycle"
+    controls-sneak: "<#71717a>Sneak + Right-click to cycle"
 
 # ─────────────────────────────────────────────── action-bar HUD (while holding a star)
-hud:
-  format: "{star} <#52525b>»</#52525b> {slots} <#52525b>┃</#52525b> {brightness_color}{brightness} ✦"
-  slot-selected: "<#fde68a>▶ <bold>{name}</bold> {state}"
-  slot: "<#a1a1aa>{name} {state}"
-  slot-locked: ""
-  separator: " <#52525b>·</#52525b> "
-  ready: "<#86efac>✔"
+# Layout: every primary in a fixed position (①②③), the selected one spelled out, then your brightness.
+#   ① Sculk Grasp READY    ② 4.2s    ③ ●      │      ✦ 5
+# {star_color} = the star's colour, {number} = numbers below, {name} = ability name, {state} = ready / cooldown.
+actionbar-hud:
+  format: "{slots}      <#3f3f46>│</#3f3f46>      {brightness_color}✦ {brightness}"
+  numbers: ["①", "②", "③"]
+  separator: "    "
+  selected: "<{star_color}>{number}</{star_color}> <#ffffff><bold>{name}</bold></#ffffff> {state}"
+  selected-ready: "<#86efac>READY"
+  selected-cooldown: "<#fca5a5>{time}"
+  slot: "<#71717a>{number}</#71717a> {state}"
+  ready: "<#86efac>●"
   cooldown: "<#fca5a5>{time}"
-  no-primaries: "<#71717a>No primaries unlocked - visit the Galactic Merchant"
+  locked: "<#3f3f46>{number}</#3f3f46>"
+  no-primaries: "<{star_color}>✦</{star_color}> <#a1a1aa>No primaries yet <#52525b>·</#52525b> <#71717a>visit the Galactic Merchant"
 
 # ─────────────────────────────────────────────── help
 help:
@@ -187,7 +196,7 @@ messages:
       chat: ["{prefix}<#86efac>Passive unlocked: <#e4e4e7>{ability}</#e4e4e7> <#71717a>(-{cost} ✦)"]
       title: {title: "", subtitle: "<#86efac>✔ {ability}", fade-in: 5, stay: 35, fade-out: 10}
     primary-unlocked:
-      chat: ["{prefix}<#86efac>Primary unlocked: <#e4e4e7>{ability}</#e4e4e7> <#71717a>(-{cost} ✦)", "  <#71717a>Hold the star: <#e4e4e7>Right-click</#e4e4e7> to cast · <#e4e4e7>F</#e4e4e7> to switch"]
+      chat: ["{prefix}<#86efac>Primary unlocked: <#e4e4e7>{ability}</#e4e4e7> <#71717a>(-{cost} ✦)", "  <#71717a>Right-click the star to cast · F to cycle"]
       title: {title: "", subtitle: "<#86efac>✔ {ability}", fade-in: 5, stay: 35, fade-out: 10}
     evaporated:
       chat: ["{prefix}<#c084fc>Your stars evaporated into the void... <#71717a>({count} lost - rebuy them at the merchant, no stock needed)"]
@@ -213,8 +222,8 @@ messages:
       cancelled: ""
 
   abilities:
-    cast: "<#86efac>✦ <#e4e4e7>{ability}"
-    cooldown: "<#fca5a5>{ability} <#a1a1aa>recharging <#fca5a5>{time}"
+    cast: "<{star_color}>✦</{star_color}> <#ffffff><bold>{ability}</bold></#ffffff>"
+    cooldown: "<#a1a1aa>{ability} <#52525b>·</#52525b> <#fca5a5>{time}"
     no-target: "<#ff5c7a>No target in sight"
     blocked: "<#ff5c7a>{ability} can't be used right now"
     locked: "<#ff5c7a>{ability} is locked"
@@ -230,8 +239,15 @@ messages:
     mirror-clone: "{prefix}<#c084fc>You now wear <#e4e4e7>{target}</#e4e4e7>'s face for {time}."
     mirror-clone-end: "{prefix}<#a1a1aa>Your reflection fades."
     astral-phase-victim:
-      title: {title: "<#c4b5fd><bold>PHASED</bold>", subtitle: "<#a1a1aa>Walk back into your body!", fade-in: 4, stay: 50, fade-out: 10}
+      chat: ["{prefix}<#c4b5fd>{caster} knocked your spirit out of your body! <#a1a1aa>Walk into it or click it to return."]
+      title: {title: "<#c4b5fd><bold>PHASED</bold>", subtitle: "<#a1a1aa>Walk into <#71717a>or</#71717a> click your body to return", fade-in: 4, stay: 50, fade-out: 10}
       sound: "entity.vex.ambient 1 0.5"
+    astral-phase-remaining: "<#c4b5fd>☁ Spirit <#52525b>·</#52525b> <#a1a1aa>body <#e4e4e7>{distance}m</#e4e4e7> away <#52525b>·</#52525b> <#fca5a5>{time}s"
+    astral-phase-returned:
+      actionbar: "<#86efac>✔ <#e4e4e7>Back in your body"
+      sound: "entity.player.levelup 0.6 1.8"
+    astral-phase-pulled:
+      actionbar: "<#c4b5fd>Your spirit was pulled back into your body"
 
   merchant:
     spawned: "{prefix}<#86efac>Merchant <#e4e4e7>{id}</#e4e4e7> placed."

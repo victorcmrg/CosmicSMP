@@ -16,6 +16,7 @@ public final class Keys {
     public static NamespacedKey TEMP_ENTITY;
     public static NamespacedKey FLOWER_VITALITY;
     public static NamespacedKey STUN;
+    public static NamespacedKey SOULLESS;
 
     private static Plugin plugin;
 
@@ -31,6 +32,7 @@ public final class Keys {
         TEMP_ENTITY = key("temp_entity");
         FLOWER_VITALITY = key("flower_vitality");
         STUN = key("stun");
+        SOULLESS = key("soulless");
     }
 
     public static NamespacedKey key(String value) {

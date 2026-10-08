@@ -2,6 +2,7 @@ package com.cosmicsmp.feature.star;
 
 import com.cosmicsmp.CosmicSMP;
 import com.cosmicsmp.core.Keys;
+import com.cosmicsmp.core.config.Settings;
 import com.cosmicsmp.core.data.PlayerData;
 import com.cosmicsmp.core.text.Placeholders;
 import org.bukkit.entity.Player;
@@ -73,7 +74,9 @@ public final class StarItemService {
                 .with("owner", owner.getName())
                 .with("abilities", abilities.toString())
                 .with("selected", selectedName)
-                .with("description", String.join("\n", star.description()));
+                .with("description", String.join("\n", star.description()))
+                .with("controls", plugin.messages().raw(plugin.settings().cycleControl == Settings.CycleControl.SNEAK_RIGHT_CLICK
+                        ? "format.item.controls-sneak" : "format.item.controls", "<#71717a>F to cycle"));
     }
 
     // ------------------------------------------------------------------ identification

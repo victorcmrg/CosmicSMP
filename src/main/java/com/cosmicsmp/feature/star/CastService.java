@@ -45,7 +45,7 @@ public final class CastService {
         if (owned == null || def == null || slot < 1) {
             return CastResult.BLOCKED;
         }
-        Placeholders ph = Placeholders.of("star", star.displayName(), "ability", def.name());
+        Placeholders ph = Placeholders.of("star", star.displayName(), "star_color", star.color(), "ability", def.name());
         if (player.getGameMode() == GameMode.SPECTATOR || plugin.settings().worldDisabled(player.getWorld().getName())) {
             plugin.messages().actionBar(player, "abilities.disabled-world", ph);
             return CastResult.BLOCKED;

@@ -27,7 +27,7 @@ Drop the jar in `plugins/`, start the server once, then edit the generated files
 | **Sonic** | Wardens are peaceful | Drag a player to you + Warden hit — **4 ✦** | Advanced Warden sonic beam — **3 ✦** | Space Warden summon, 5 hearts/hit — **5 ✦** |
 | **Trail** | No fall damage | Alien Dragon fists, 4 hearts — **5 ✦** | Dragon's breath fireball, 6 hearts — **3 ✦** | Ride the Alien Dragon 10 s — **5 ✦** |
 | **Elder** | Hits give Mining Fatigue 5 s | Laser, 3 hearts — **3 ✦** | Launch wave, 6 hearts — **5 ✦** | 5×5 force field 10 s, bounces intruders — **3 ✦** |
-| **Cosmic** | Resistance II at night | Ride a comet 8 s — **3 ✦** | Clone a player's skin, name and trims 4 min — **5 ✦** | Phase the enemy out of their body — **5 ✦** |
+| **Cosmic** | Resistance II at night | Ride a comet 8 s — **3 ✦** | Clone a player's skin, name and trims 4 min — **5 ✦** | Phase the enemy out of their body (spirit returns by walking into / clicking the body) — **5 ✦** |
 | **Nature** | +2 hearts near flowers | Vine, 6 hearts — **3 ✦** | Giant bee sting, 20 s nausea — **3 ✦** | Earth Clap walls, 7 hearts + stun — **5 ✦** |
 
 Every star costs **6 ✦**. All numbers (costs, damage, ranges, durations, cooldowns, particles, sounds) live in
@@ -40,9 +40,17 @@ At **7**: 15-block Dash (**Sneak + F**). At **−3**: death ban. Buying anything
 re-bought. Each star has a global **stock**; the *first* purchase by a player uses one unit and permanently
 *discovers* the star for them, so re-buying after death never uses stock and works even at 0 stock.
 
-**Controls (holding a star)** — **Right-click** cast the selected primary · **F** switch primary
-(or Sneak + Right-click, configurable). The action bar shows the selected ability and live cooldowns; the item
-itself shows the native cooldown sweep.
+**Controls (holding a star)** — **Right-click** cast the selected primary · **F** cycle primaries
+(or Sneak + Right-click, configurable). The action bar shows every primary in a fixed position with live cooldowns,
+e.g. `① Sculk Grasp READY    ② 4.2s    ③    │    ✦ 5` (`messages.yml -> actionbar-hud`); the item itself shows
+the native cooldown sweep.
+
+**Astral Phase** — the target's body stays behind as a Mannequin with their skin and armour while the player becomes a
+spirit (spectator: intangible, can't fight, interact or take damage; others see a soul wisp and a tether). Walking
+into the body or clicking it returns them; after `max-duration-seconds` they are pulled back. A leash keeps the spirit
+within `leash-radius`. Attacks on the empty body are stored (x1.5) and applied on return with kill credit; if they
+would kill, the spirit is yanked back at once. Game mode and body position are persisted first, so quit, reload or a
+crash always restore the player. Mobs hit by it become soulless (no AI) for a few seconds.
 
 ### Interpretation choices (all configurable)
 

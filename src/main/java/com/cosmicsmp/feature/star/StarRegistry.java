@@ -17,6 +17,8 @@ import java.util.Map;
 public final class StarRegistry {
 
     private static final List<String> DEFAULTS = List.of("sonic", "trail", "elder", "cosmic", "nature");
+    /** Controls line shipped in 1.0.0 star files; replaced by the {controls} placeholder at the end of the lore. */
+    private static final String OLD_CONTROLS_LINE = "<#71717a>Right-click <#a1a1aa>cast · <#71717a>F <#a1a1aa>switch";
 
     private final CosmicSMP plugin;
     private Map<String, StarDefinition> stars = Map.of();
@@ -44,6 +46,7 @@ public final class StarRegistry {
                     }
                     continue;
                 }
+                migrate(yaml);
                 StarDefinition star = new StarDefinition(file.getName().substring(0, file.getName().length() - 4), yaml.get());
                 if (star.enabled()) {
                     loaded.add(star);
@@ -57,6 +60,20 @@ public final class StarRegistry {
         }
         stars = Collections.unmodifiableMap(map);
         plugin.getLogger().info("Loaded " + stars.size() + " stars: " + String.join(", ", stars.keySet()));
+    }
+
+    /** Upgrades untouched default lore from older versions (custom lore is left alone). */
+    private void migrate(YamlFile yaml) {
+        List<String> lore = new ArrayList<>(yaml.get().getStringList("item.lore"));
+        if (!lore.remove(OLD_CONTROLS_LINE)) {
+            return;
+        }
+        if (!lore.contains("{controls}")) {
+            lore.add("{controls}");
+        }
+        yaml.get().set("item.lore", lore);
+        yaml.save();
+        plugin.getLogger().info("Updated the item lore of " + yaml.file().getName() + " (controls line moved to the end).");
     }
 
     /** Warns about stars that reference abilities nobody registered (typo or missing expansion). */

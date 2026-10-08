@@ -2,6 +2,7 @@ package com.cosmicsmp.feature.star;
 
 import com.cosmicsmp.CosmicSMP;
 import com.cosmicsmp.core.data.PlayerData;
+import com.cosmicsmp.core.text.Messages;
 import com.cosmicsmp.core.text.Placeholders;
 import com.cosmicsmp.core.text.Text;
 import com.cosmicsmp.feature.ability.CooldownService;
@@ -14,6 +15,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitTask;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -103,38 +105,39 @@ public final class HudService implements Listener {
         if (star == null || owned == null) {
             return null;
         }
-        String ready = plugin.messages().raw("hud.ready", "<#86efac>✔");
-        String slotSelected = plugin.messages().raw("hud.slot-selected", "<#fde68a><bold>{name}</bold> {state}");
-        String slotOther = plugin.messages().raw("hud.slot", "<#a1a1aa>{name} {state}");
-        String slotLocked = plugin.messages().raw("hud.slot-locked", "");
-        String separator = plugin.messages().raw("hud.separator", " <dark_gray>┃</dark_gray> ");
+        Messages m = plugin.messages();
+        String path = "actionbar-hud.";
+        List<String> numbers = m.rawList(path + "numbers");
+        String separator = m.raw(path + "separator", "   ");
         StringBuilder slots = new StringBuilder();
         for (AbilityDefinition def : star.primaries()) {
-            String format;
-            String state;
+            String number = def.slot() - 1 < numbers.size() ? numbers.get(def.slot() - 1) : String.valueOf(def.slot());
+            String piece;
             if (!owned.unlocked(def.slot())) {
-                format = slotLocked;
-                state = "";
+                piece = m.raw(path + "locked", "<#3f3f46>{number}</#3f3f46>");
             } else {
+                boolean selected = owned.selected == def.slot();
                 long left = plugin.cooldowns().remainingMillis(data, def.key());
-                state = left > 0 ? plugin.messages().raw("hud.cooldown", "<#fca5a5>{time}").replace("{time}", CooldownService.format(left)) : ready;
-                format = owned.selected == def.slot() ? slotSelected : slotOther;
+                String state = left > 0
+                        ? m.raw(path + (selected ? "selected-cooldown" : "cooldown"), "<#fca5a5>{time}").replace("{time}", CooldownService.format(left))
+                        : m.raw(path + (selected ? "selected-ready" : "ready"), "<#86efac>●");
+                piece = m.raw(path + (selected ? "selected" : "slot"), "{number} {state}").replace("{state}", state);
             }
-            if (format.isEmpty()) {
+            if (piece.isEmpty()) {
                 continue;
             }
             if (!slots.isEmpty()) {
                 slots.append(separator);
             }
-            slots.append(format.replace("{name}", Text.plain(Text.parse(def.name()))).replace("{state}", state)
-                    .replace("{slot}", String.valueOf(def.slot())));
+            slots.append(piece.replace("{number}", number).replace("{star_color}", star.color())
+                    .replace("{name}", Text.plain(Text.parse(def.name()))));
         }
-        if (slots.isEmpty()) {
-            slots.append(plugin.messages().raw("hud.no-primaries", "<#71717a>No primaries unlocked"));
-        }
-        Placeholders ph = Placeholders.of("star", star.displayName(), "slots", slots.toString(),
+        String format = owned.primaries.isEmpty()
+                ? m.raw(path + "no-primaries", "<#a1a1aa>No primaries yet")
+                : m.raw(path + "format", "{slots}");
+        Placeholders ph = Placeholders.of("slots", slots.toString(), "star", star.displayName(), "star_color", star.color(),
                 "brightness", data.brightness, "brightness_color", plugin.brightness().color(data.brightness));
-        return ph.apply(plugin.messages().raw("hud.format", "{star} <dark_gray>»</dark_gray> {slots}"));
+        return ph.apply(format);
     }
 
     @EventHandler
