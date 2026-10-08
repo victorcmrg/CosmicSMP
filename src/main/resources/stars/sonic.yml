@@ -1,0 +1,135 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                            SONIC STAR                              ║
+# ╚══════════════════════════════════════════════════════════════════╝
+# Every star is one file. To add a star: copy this file, change "id", the texts and the "ability:" ids.
+# Item fields (item / icon / *-item): material (VANILLA | itemsadder:ns:id | ia:ns:id | mythic:Id), name, lore,
+#   custom-model-data, custom-model-data-strings, item-model, tooltip-style, glow, hide-flags, color, skull-texture.
+# Sounds: "key", "key volume pitch" or {sound, volume, pitch}. ItemsAdder sounds work as plain keys.
+# Particles: TYPE or {type, count, offset, speed, color, to-color, size, block, power}.
+# Models: settings.models.<name> = BetterModel model id (empty = vanilla placeholder mob).
+
+id: sonic
+enabled: true
+order: 1
+display-name: "<gradient:#0ea5e9:#22d3ee><bold>Sonic Star</bold></gradient>"
+color: "#22d3ee"
+price: 6
+# Global stock: how many players can claim it for the first time. -1 = unlimited.
+stock: 5
+merchant-slot: 11
+model: ""
+description:
+  - "<#a1a1aa>Forged in the Deep Dark, it hums"
+  - "<#a1a1aa>with the voice of the Wardens."
+
+# The physical star given on purchase (soulbound).
+item:
+  material: ECHO_SHARD
+  name: "{star_name}"
+  item-model: ""
+  custom-model-data: 0
+  glow: true
+  lore:
+    - "{description}"
+    - ""
+    - "{abilities}"
+    - ""
+    - "<#71717a>Right-click <#a1a1aa>cast · <#71717a>F <#a1a1aa>switch"
+    - "<#52525b>Bound to {owner}"
+
+# Icon used in menus (defaults to the item when omitted).
+icon:
+  material: ECHO_SHARD
+  custom-model-data: 0
+
+passive:
+  ability: warden_peace
+  name: "<#22d3ee>Deep Dark Kinship"
+  cost: 2
+  description:
+    - "<#a1a1aa>Wardens are peaceful towards you"
+    - "<#a1a1aa>and their darkness can't reach you."
+  icon:
+    material: SCULK_SENSOR
+
+primaries:
+  1:
+    ability: sculk_grasp
+    name: "<#22d3ee>Sculk Grasp"
+    cost: 4
+    cooldown: 18
+    description:
+      - "<#a1a1aa>Tendrils drag a player to you,"
+      - "<#a1a1aa>then you strike like a Warden."
+    icon:
+      material: SCULK_VEIN
+    settings:
+      range: 18
+      ray-size: 0.6
+      players-only: false
+      pull-speed: 1.15
+      max-pull-ticks: 20
+      damage: 8.0              # 4 hearts
+      knockback: 0.7
+      knockback-vertical: 0.35
+      darkness-seconds: 3
+      sounds:
+        cast: "entity.warden.tendril_clicks 1.5 0.8"
+        impact: "entity.warden.attack_impact 1.6 0.9"
+      particles:
+        tendril: SCULK_SOUL
+        pop: {type: SCULK_CHARGE_POP, count: 4, offset: 0.25, speed: 0.02}
+  2:
+    ability: sonic_beam
+    name: "<#22d3ee>Advanced Sonic Beam"
+    cost: 3
+    cooldown: 22
+    description:
+      - "<#a1a1aa>Charge and release a piercing Warden"
+      - "<#a1a1aa>sonic boom wrapped in a sculk helix."
+    icon:
+      material: SCULK_SHRIEKER
+    settings:
+      charge-ticks: 12
+      slow-caster: true
+      range: 24
+      width: 1.1
+      pierce-blocks: true
+      damage: 10.0             # 5 hearts, ignores armour like a real sonic boom
+      damage-type: sonic_boom
+      knockback: 1.6
+      knockback-vertical: 0.4
+      sounds:
+        charge: "entity.warden.sonic_charge 1.6 1.1"
+        boom: "entity.warden.sonic_boom 2.5 1.0"
+      particles:
+        charge: SCULK_SOUL
+        helix: {type: DUST, color: "#22d3ee", size: 1.1}
+        helix-secondary: ELECTRIC_SPARK
+        boom: SONIC_BOOM
+  3:
+    ability: space_warden
+    name: "<#22d3ee>Space Warden"
+    cost: 5
+    cooldown: 90
+    description:
+      - "<#a1a1aa>Summon a Space Warden that hunts"
+      - "<#a1a1aa>your enemies. Hits for 5 hearts."
+    icon:
+      material: SCULK_CATALYST
+    settings:
+      mob: WARDEN              # or mythic:SpaceWarden
+      models:
+        warden: ""             # BetterModel id, e.g. space_warden
+      lifetime-seconds: 25
+      health: 120
+      damage: 10.0             # 5 hearts per hit
+      scale: 1.0
+      glowing: true
+      target-radius: 16
+      sounds:
+        summon: "entity.warden.emerge 1.4 1.2"
+        despawn: "entity.warden.dig 1.2 1.3"
+      particles:
+        aura: {type: DUST, color: "#22d3ee", size: 1.4, count: 3, offset: 0.6}
+        stars: {type: END_ROD, count: 2, offset: 0.6, speed: 0.01}

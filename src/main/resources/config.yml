@@ -1,0 +1,123 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                 ✦  C O S M I C   S M P  ·  Season 3  ✦             ║
+# ╚══════════════════════════════════════════════════════════════════╝
+# Text everywhere accepts MiniMessage (<gradient:#a855f7:#22d3ee>, <bold>...), hex (&#a855f7, {#a855f7}) and legacy (&a).
+# Reload with /cosmic admin reload (player data is never touched by a reload).
+
+general:
+  debug: false
+  # Worlds where abilities, passives and perks are disabled.
+  disabled-worlds: []
+
+modules:
+  brightness: true
+  stars: true
+  merchant: true
+
+storage:
+  # Player data is saved immediately on important changes (purchases, brightness, bans) and on quit.
+  # Everything else is flushed on this interval. Files: plugins/CosmicSMP/data/players/<uuid>.json
+  autosave-minutes: 5
+
+performance:
+  # Particles are only sent to players within this distance (blocks).
+  particle-view-distance: 48
+  hud:
+    # Action-bar HUD shown while holding a star (only sent when its text changes).
+    enabled: true
+    update-ticks: 5
+
+brightness:
+  min: -3          # reaching this value = death ban
+  max: 7
+  start: 0
+  gain-on-kill: 1
+  lose-on-death: 1
+  # false = only deaths caused by a player cost brightness (as in the design doc). true = every death.
+  lose-on-any-death: false
+  anti-farm:
+    # Killing the same player again within this window grants no brightness.
+    enabled: true
+    same-victim-cooldown-seconds: 600
+  feedback:
+    titles: true      # titles / sounds when brightness changes (see messages.yml -> brightness.gained/lost)
+    holograms: true   # floating "+1 ✦" visible only to the player
+
+perks:
+  speed:
+    enabled: true
+    required-brightness: 5
+    amplifier: 0      # 0 = Speed I
+  dash:
+    enabled: true
+    required-brightness: 7
+    distance: 15
+    duration-ticks: 6
+    cooldown-seconds: 8
+    no-fall-seconds: 4
+    # Trigger: Sneak + F (swap hands)
+
+death-ban:
+  enabled: true
+  # 0 = permanent until /cosmic player unban
+  duration-minutes: 0
+  # Brightness a player returns with after the ban ends.
+  reset-brightness-on-return: 0
+  broadcast: true
+  bypass-ops: false
+
+stars:
+  # On death: stars evaporate (lost) and must be bought again. Rebuying never uses stock.
+  evaporate-on-death: true
+  # Also lock the passive/primaries again when a star evaporates.
+  reset-abilities-on-death: true
+  # Buying needs the Galactic Merchant (the profile/tree menus become view + select only).
+  purchases-require-merchant: true
+  # Give back lost star items automatically on join/respawn.
+  auto-restore-items: true
+  # FREE = buy any node in any order. SEQUENTIAL = passive -> primary 1 -> 2 -> 3.
+  skill-tree-mode: FREE
+  purchase-animation: true
+  ability-targets:
+    players: true
+    mobs: true
+
+controls:
+  # How to change the selected primary while holding a star:
+  #   SWAP_HAND          -> press F
+  #   SNEAK_RIGHT_CLICK  -> sneak + right click
+  # Right click always casts. Sneak + F is the brightness dash.
+  cycle-ability: SWAP_HAND
+  click-throttle-ms: 200
+
+stock:
+  restock:
+    # Periodically refill stock towards each star's default value (catches up after downtime).
+    enabled: false
+    interval-minutes: 1440
+    amount: 1
+
+combat:
+  # Damage type used by abilities (minecraft damage type key). "magic" ignores armour like the design's "X hearts".
+  damage-type: magic
+  ignore-invulnerability-ticks: true
+  # A death within this time after an ability/summon hit credits the caster with the kill.
+  kill-credit-seconds: 15
+
+merchant:
+  # Vanilla entity type or "mythic:<MobId>". Placeholder until the custom model is ready.
+  entity: WANDERING_TRADER
+  # BetterModel model id applied on top of the entity (empty = vanilla look).
+  model: ""
+  scale: 1.15
+  glowing: false
+  nameplate:
+    - "<gradient:#a855f7:#22d3ee><bold>✦ Galactic Merchant ✦</bold></gradient>"
+    - "<#a1a1aa>Right-click to trade with the stars"
+  nameplate-height: 2.45
+  ambient-particles: true
+
+hooks:
+  itemsadder: true
+  mythicmobs: true
+  bettermodel: true

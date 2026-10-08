@@ -1,0 +1,114 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                  GALACTIC MERCHANT  ·  menu (9x6)                  ║
+# ╚══════════════════════════════════════════════════════════════════╝
+# Every menu is a 54-slot chest (GENERIC_9X6). Slots: 0-53 (row * 9 + column).
+# items:     static items. Keys are free names. Fields: slot / slots ([1, 2, "9-17"]), material, amount, name, lore,
+#            custom-model-data, item-model, glow, skull-owner, skull-texture, permission, click-sound and actions:
+#            close | back | refresh | open:<merchant|profile|stock> | command:<cmd> | console:<cmd> | message:<text> | sound:<sound>
+# Placeholders: {player} {brightness} {brightness_max} {brightness_bar} {brightness_color} {kills} {deaths}
+#               {stars_owned} {stars_discovered} {stars_bought} {speed_required} {dash_required} {ban_threshold}
+# Star slots come from each star file (merchant-slot); stars without one use auto-star-slots.
+
+title: "<gradient:#a855f7:#22d3ee><bold>✦ Galactic Merchant ✦</bold></gradient>"
+open-sound: "block.amethyst_block.chime 1 0.8"
+click-sound: "ui.button.click 0.4 1.6"
+error-sound: "entity.villager.no 0.6 1"
+
+auto-star-slots: [20, 24, 38, 42, 40, 10, 16, 28, 34]
+
+star-icon:
+  name: "{star}"
+  glow-owned: true
+  lore:
+    - "{description}"
+    - ""
+    - "<#71717a>Status  {status}"
+    - "<#71717a>Price   <#fde68a>{price} ✦"
+    - "<#71717a>Stock   <#e4e4e7>{stock}"
+    - ""
+    - "{abilities}"
+    - ""
+    - "{action}"
+  status:
+    owned: "<#86efac>✔ Owned"
+    available: "<#fde68a>✦ Available"
+    rebuy: "<#c084fc>↺ Rebuy <#71717a>(no stock needed)"
+    poor: "<#ff5c7a>✖ Not enough brightness"
+    out-of-stock: "<#ff5c7a>✖ Out of stock"
+  action:
+    owned: "<#fde68a>» Click to open the skill tree"
+    buy: "<#fde68a>» Click to buy"
+    visit: "<#a1a1aa>» Buy it at a Galactic Merchant"
+    locked: ""
+  ability-line:
+    unlocked: "<#86efac>✔ <#e4e4e7>{name} <#71717a>· {type}"
+    locked: "<#52525b>✖ <#a1a1aa>{name} <#71717a>· {type} · <#fde68a>{cost} ✦"
+
+items:
+  background:
+    slots: ["0-53"]
+    material: BLACK_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  border-top:
+    slots: [0, 2, 6, 8, 45, 47, 51, 53]
+    material: PURPLE_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  border-accent:
+    slots: [1, 3, 5, 7, 46, 52]
+    material: CYAN_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  constellation:
+    slots: [12, 14, 30, 32]
+    material: WHITE_STAINED_GLASS_PANE
+    name: "<#e4e4e7>✧"
+    hide-tooltip: true
+  stardust:
+    slots: [13, 21, 23, 31]
+    material: LIGHT_GRAY_STAINED_GLASS_PANE
+    name: "<#71717a>·"
+    hide-tooltip: true
+  header:
+    slot: 4
+    material: PLAYER_HEAD
+    skull-owner: "{player}"
+    name: "<gradient:#a855f7:#22d3ee><bold>{player}</bold></gradient>"
+    lore:
+      - "<#71717a>Brightness  {brightness_color}<bold>{brightness}</bold><#52525b>/{brightness_max}"
+      - "{brightness_bar}"
+      - ""
+      - "<#71717a>Stars owned  <#e4e4e7>{stars_owned}"
+      - "<#71717a>Kills        <#e4e4e7>{kills}"
+  profile:
+    slot: 48
+    material: AMETHYST_SHARD
+    name: "<#c084fc><bold>Your Profile"
+    lore:
+      - "<#a1a1aa>Perks, owned stars and stats."
+      - ""
+      - "<#fde68a>» Click to open"
+    actions: ["open:profile"]
+  close:
+    slot: 49
+    material: BARRIER
+    name: "<#ff5c7a><bold>Close"
+    actions: ["close"]
+  info:
+    slot: 50
+    material: KNOWLEDGE_BOOK
+    name: "<#fde68a><bold>How it works"
+    lore:
+      - "<#a1a1aa>Buy a <#e4e4e7>star</#e4e4e7>, then unlock its"
+      - "<#e4e4e7>passive</#e4e4e7> and <#e4e4e7>primaries</#e4e4e7> with brightness."
+      - ""
+      - "<#fde68a>☀ <#a1a1aa>Kill a player: <#86efac>+1 brightness"
+      - "<#fde68a>☀ <#a1a1aa>Killed by a player: <#ff5c7a>-1 brightness"
+      - "<#fde68a>☀ <#a1a1aa>{speed_required} brightness: <#e4e4e7>Speed I"
+      - "<#fde68a>☀ <#a1a1aa>{dash_required} brightness: <#e4e4e7>Dash <#71717a>(Sneak + F)"
+      - "<#ff5c7a>☠ <#a1a1aa>{ban_threshold} brightness: <#ff5c7a>death ban"
+      - ""
+      - "<#c084fc>✦ <#a1a1aa>When you die your stars <#c084fc>evaporate</#c084fc>."
+      - "<#a1a1aa>  Rebuying a star you already discovered"
+      - "<#a1a1aa>  never needs stock."

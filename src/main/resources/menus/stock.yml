@@ -1,0 +1,43 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                    STOCK EDITOR (admin)  ·  menu (9x6)             ║
+# ╚══════════════════════════════════════════════════════════════════╝
+
+title: "<#fde68a><bold>⚖ Star Stock</bold>"
+click-sound: "block.note_block.hat 0.6 1.6"
+
+star-slots: [20, 21, 22, 23, 24, 29, 30, 31, 32, 33]
+
+star-icon:
+  name: "{star}"
+  lore:
+    - "<#71717a>Stock    <#e4e4e7><bold>{stock}</bold>"
+    - "<#71717a>Default  <#e4e4e7>{default}"
+    - ""
+    - "<#fde68a>Left  <#a1a1aa>+1"
+    - "<#fde68a>Right  <#a1a1aa>-1"
+    - "<#fde68a>Shift + Left  <#a1a1aa>unlimited"
+    - "<#fde68a>Shift + Right  <#a1a1aa>reset to default"
+
+items:
+  background:
+    slots: ["0-53"]
+    material: BLACK_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  frame:
+    slots: ["0-8", "45-53"]
+    material: YELLOW_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  info:
+    slot: 4
+    material: COMPARATOR
+    name: "<#fde68a><bold>Stock Editor"
+    lore:
+      - "<#a1a1aa>First purchase of a star uses stock."
+      - "<#a1a1aa>Rebuys after death never do."
+  close:
+    slot: 49
+    material: BARRIER
+    name: "<#ff5c7a><bold>Close"
+    actions: ["close"]

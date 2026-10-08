@@ -1,0 +1,115 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                           NATURE STAR                              ║
+# ╚══════════════════════════════════════════════════════════════════╝
+# See sonic.yml for the documentation of every field.
+
+id: nature
+enabled: true
+order: 5
+display-name: "<gradient:#22c55e:#a3e635><bold>Nature Star</bold></gradient>"
+color: "#4ade80"
+price: 6
+stock: 5
+merchant-slot: 33
+model: ""
+description:
+  - "<#a1a1aa>A seed that fell from the stars and"
+  - "<#a1a1aa>took root in the world."
+
+item:
+  material: EMERALD
+  name: "{star_name}"
+  glow: true
+  lore:
+    - "{description}"
+    - ""
+    - "{abilities}"
+    - ""
+    - "<#71717a>Right-click <#a1a1aa>cast · <#71717a>F <#a1a1aa>switch"
+    - "<#52525b>Bound to {owner}"
+
+icon:
+  material: EMERALD
+
+passive:
+  ability: flower_vitality
+  name: "<#4ade80>Bloom Vitality"
+  cost: 2
+  description:
+    - "<#a1a1aa>Standing near flowers gives you"
+    - "<#a1a1aa>2 extra hearts."
+  icon:
+    material: POPPY
+  settings:
+    radius: 3
+    health-bonus: 4            # 2 hearts
+    fill-hearts: true
+    fill-cooldown-seconds: 60
+
+primaries:
+  1:
+    ability: vine_eruption
+    name: "<#4ade80>Vine Eruption"
+    cost: 3
+    cooldown: 14
+    description:
+      - "<#a1a1aa>A twisting vine erupts under the"
+      - "<#a1a1aa>target and roots it (6 hearts)."
+    icon:
+      material: VINE
+    settings:
+      range: 20
+      radius: 1.8
+      damage: 12.0             # 6 hearts
+      root-seconds: 2
+      vine-block: MOSS_BLOCK
+      leaf-block: FLOWERING_AZALEA_LEAVES
+      sounds:
+        cast: "block.rooted_dirt.break 1.4 0.7"
+        hit: "entity.evoker_fangs.attack 1.2 0.8"
+  2:
+    ability: giant_bee
+    name: "<#4ade80>Giant Bee"
+    cost: 3
+    cooldown: 30
+    description:
+      - "<#a1a1aa>A giant bee stings your target and"
+      - "<#a1a1aa>flies away - dizzy for 20 seconds."
+    icon:
+      material: HONEYCOMB
+    settings:
+      range: 24
+      mob: BEE                 # or mythic:GiantBee
+      scale: 2.5
+      models:
+        bee: ""                # BetterModel id
+      speed: 0.75
+      sting-damage: 3.0
+      nausea-seconds: 20
+      nausea-amplifier: 1
+      poison-seconds: 0
+      sounds:
+        cast: "entity.bee.loop_aggressive 1.5 0.6"
+        sting: "entity.bee.sting 1.4 0.7"
+  3:
+    ability: earth_clap
+    name: "<#4ade80>Earth Clap"
+    cost: 5
+    cooldown: 35
+    description:
+      - "<#a1a1aa>Two walls burst from the ground and"
+      - "<#a1a1aa>crush the target, then stun (7 hearts)."
+    icon:
+      material: MOSSY_COBBLESTONE
+    settings:
+      range: 18
+      radius: 1.8
+      damage: 14.0             # 7 hearts
+      stun-seconds: 2.5
+      wall-width: 3
+      wall-height: 3
+      distance: 2.4
+      fallback-block: MOSS_BLOCK
+      sounds:
+        rise: "entity.ravager.step 1.4 0.6"
+        impact: "block.anvil.land 1.0 0.5"

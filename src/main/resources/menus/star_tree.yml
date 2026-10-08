@@ -1,0 +1,109 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                     STAR SKILL TREE  ·  menu (9x6)                 ║
+# ╚══════════════════════════════════════════════════════════════════╝
+# Layout:            [ 4 star ]
+#                    [13] connector
+#                    [22 passive]
+#           [29][30] [31] [32][33]  connectors
+#           [38 #1]  [40 #2]  [42 #3]
+# Extra placeholders: {star} {star_color}; nodes: {name} {description} {cost} {cooldown} {type} {status} {action}
+
+title: "{star} <#52525b>· <#a1a1aa>Skill Tree"
+open-sound: "block.enchantment_table.use 0.8 1.4"
+click-sound: "ui.button.click 0.4 1.6"
+error-sound: "entity.villager.no 0.6 1"
+
+star-slot: 4
+passive-slot: 22
+primary-slots: [38, 40, 42]
+
+connectors:
+  passive: [13]
+  primary-1: [30, 29]
+  primary-2: [31]
+  primary-3: [32, 33]
+
+connector:
+  unlocked:
+    material: LIME_STAINED_GLASS_PANE
+    name: "<#86efac>✦"
+    hide-tooltip: true
+  locked:
+    material: GRAY_STAINED_GLASS_PANE
+    name: "<#52525b>·"
+    hide-tooltip: true
+
+star:
+  name: "{star}"
+  lore:
+    - "{description}"
+    - ""
+    - "{status}"
+    - ""
+    - "{abilities}"
+  status:
+    owned: "<#86efac>✔ You own this star"
+    not-owned: "<#ff5c7a>✖ Not owned <#71717a>· <#fde68a>{price} ✦"
+  ability-line:
+    unlocked: "<#86efac>✔ <#e4e4e7>{name}"
+    locked: "<#52525b>✖ <#a1a1aa>{name} <#71717a>· <#fde68a>{cost} ✦"
+
+node:
+  name: "{name}"
+  lore:
+    - "<#71717a>{type}"
+    - ""
+    - "{description}"
+    - ""
+    - "<#71717a>Cost      <#fde68a>{cost} ✦"
+    - "<#71717a>Cooldown  <#e4e4e7>{cooldown}"
+    - ""
+    - "{status}"
+    - "{action}"
+  status:
+    selected: "<#fde68a>▶ Selected"
+    unlocked: "<#86efac>✔ Unlocked"
+    available: "<#fde68a>✦ Available"
+    poor: "<#ff5c7a>✖ Not enough brightness"
+    locked-star: "<#ff5c7a>✖ Buy the star first"
+    requires: "<#ff5c7a>✖ Unlock the previous node first"
+    unavailable: "<#52525b>✖ Unavailable"
+  action:
+    buy: "<#fde68a>» Click to unlock"
+    select: "<#fde68a>» Click to select"
+    selected: ""
+    visit: "<#a1a1aa>» Unlock it at a Galactic Merchant"
+    none: ""
+
+items:
+  background:
+    slots: ["0-53"]
+    material: BLACK_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  frame:
+    slots: [0, 8, 45, 53]
+    material: PURPLE_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  frame-accent:
+    slots: [1, 7, 46, 52]
+    material: CYAN_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  brightness:
+    slot: 49
+    material: GLOWSTONE_DUST
+    name: "<#fde68a><bold>Brightness  {brightness_color}{brightness}<#52525b>/{brightness_max}"
+    lore:
+      - "{brightness_bar}"
+  back:
+    slot: 45
+    material: ARROW
+    name: "<#a1a1aa>« Back"
+    actions: ["back"]
+  close:
+    slot: 53
+    material: BARRIER
+    name: "<#ff5c7a><bold>Close"
+    actions: ["close"]

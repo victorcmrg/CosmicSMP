@@ -1,0 +1,284 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                     CosmicSMP · messages & formats                 ║
+# ╚══════════════════════════════════════════════════════════════════╝
+# Formats: MiniMessage (<gradient:#a855f7:#22d3ee>text</gradient>, <#ff00aa>, <bold>, <hover:...>),
+#          hex shortcuts (&#ff00aa / {#ff00aa}) and legacy codes (&a, &l).
+# A message under "messages:" can be:
+#   key: "single line"                      key: ["line 1", "line 2"]
+#   key:
+#     chat: ["..."]                          # optional
+#     actionbar: "..."                       # optional
+#     title: {title: "...", subtitle: "...", fade-in: 10, stay: 50, fade-out: 15}
+#     sound: "entity.player.levelup 1 1.2"   # vanilla or resource-pack (ItemsAdder) sound
+# Use "" to disable a line. {prefix} is available everywhere.
+
+prefix: "<gradient:#a855f7:#22d3ee><bold>COSMIC</bold></gradient> <#52525b>»</#52525b> "
+
+# ─────────────────────────────────────────────── shared formats
+format:
+  passive: "Passive"
+  primary: "Primary #{slot}"
+  owned: "<#86efac>owned"
+  discovered: "<#fde68a>discovered"
+  unlimited: "∞"
+  permanent: "permanent"
+  ready: "ready"
+  none: "none"
+  popup-gain: "<bold><gradient:#fde68a:#f59e0b>{delta} ✦</gradient></bold>"
+  popup-loss: "<bold><#ff5c7a>{delta} ✦</bold>"
+  bar:
+    filled: "■"
+    empty: "□"
+    negative-color: "<#ff5c7a>"
+    positive-color: "<#fde68a>"
+    zero-color: "<#e4e4e7>"
+    empty-color: "<#3f3f46>"
+  item:
+    passive-unlocked: "<#86efac>✔ <#e4e4e7>{name} <#71717a>(passive)"
+    passive-locked: "<#52525b>✖ {name} (passive)"
+    primary-unlocked: "<#86efac>✔ <#e4e4e7>{name}"
+    primary-selected: "<#fde68a>▶ <bold>{name}</bold>"
+    primary-locked: "<#52525b>✖ {name}"
+
+# ─────────────────────────────────────────────── action-bar HUD (while holding a star)
+hud:
+  format: "{star} <#52525b>»</#52525b> {slots} <#52525b>┃</#52525b> {brightness_color}{brightness} ✦"
+  slot-selected: "<#fde68a>▶ <bold>{name}</bold> {state}"
+  slot: "<#a1a1aa>{name} {state}"
+  slot-locked: ""
+  separator: " <#52525b>·</#52525b> "
+  ready: "<#86efac>✔"
+  cooldown: "<#fca5a5>{time}"
+  no-primaries: "<#71717a>No primaries unlocked - visit the Galactic Merchant"
+
+# ─────────────────────────────────────────────── help
+help:
+  header:
+    - ""
+    - "  <gradient:#a855f7:#22d3ee><bold>✦ COSMIC SMP</bold></gradient> <#71717a>· Season 3"
+    - "  <#52525b><strikethrough>                                                  </strikethrough>"
+  category-line: "  <#c084fc>{icon}</#c084fc> <#e4e4e7>/{label} {category}</#e4e4e7> <#52525b>-</#52525b> <#a1a1aa>{description}"
+  category-hover: "<gradient:#a855f7:#22d3ee>{icon} {category}</gradient>\n<#a1a1aa>{description}\n\n<#71717a>{count} commands · <#fde68a>Click to open"
+  command-line: "  <#22d3ee>›</#22d3ee> <#e4e4e7>{usage}</#e4e4e7> <#52525b>-</#52525b> <#a1a1aa>{description}"
+  command-hover: "<#e4e4e7>{usage}\n<#a1a1aa>{description}\n\n<#71717a>Permission: <#c084fc>{permission}\n<#fde68a>Click to type"
+  footer:
+    - "  <#52525b><strikethrough>                                                  </strikethrough>"
+    - "  <#71717a>Hover for details · click to use"
+    - ""
+  category-header:
+    - ""
+    - "  <gradient:#a855f7:#22d3ee><bold>{icon} {category}</bold></gradient> <#71717a>· {description}"
+    - "  <#52525b><strikethrough>                                                  </strikethrough>"
+  category-footer:
+    - "  <#52525b><strikethrough>                                                  </strikethrough>"
+    - ""
+  categories:
+    stars: "Stars, skill trees and abilities"
+    brightness: "Your brightness and the leaderboard"
+    merchant: "Galactic Merchant management"
+    stock: "Star stock management"
+    player: "Player management"
+    admin: "Plugin administration"
+  commands:
+    root:
+      menu: "Open your cosmic profile"
+      info: "Plugin information"
+    stars:
+      list: "List every star with price and stock"
+      info: "Show a star and its abilities"
+      tree: "Open a star's skill tree"
+      select: "Select the primary of the star you hold"
+      recover: "Get back missing star items"
+    brightness:
+      check: "Show your (or someone's) brightness"
+      top: "Brightness leaderboard"
+      set: "Set a player's brightness"
+      give: "Add brightness to a player"
+      take: "Remove brightness from a player"
+    merchant:
+      open: "Open the merchant menu (for you or a player)"
+      spawn: "Place a Galactic Merchant here"
+      remove: "Remove a merchant"
+      list: "List merchants"
+      tp: "Teleport to a merchant"
+    stock:
+      view: "Show every star's stock"
+      set: "Set a star's stock"
+      reset: "Reset stock to the defaults"
+      menu: "Open the stock editor"
+    player:
+      info: "Show a player's cosmic data"
+      givestar: "Give a star (add 'full' to unlock everything)"
+      takestar: "Take a star away"
+      unlock: "Unlock a passive / primary"
+      clearcooldowns: "Clear all cooldowns"
+      reset: "Wipe a player's cosmic data"
+      unban: "Lift a brightness death ban"
+    admin:
+      reload: "Reload configs, messages, menus and stars"
+      save: "Save all data now"
+      debug: "Runtime status"
+      cleanup: "Remove orphan summons"
+
+# ─────────────────────────────────────────────── death-ban kick / login screen
+death-ban:
+  screen:
+    - "<gradient:#a855f7:#22d3ee><bold>✦ COSMIC SMP ✦</bold></gradient>"
+    - ""
+    - "<#ff5c7a><bold>Your light has gone out.</bold>"
+    - "<#a1a1aa>You reached <#ff5c7a>-3 brightness</#ff5c7a> and were death banned."
+    - ""
+    - "<#71717a>Ban: <#e4e4e7>{duration}"
+
+# ─────────────────────────────────────────────── messages
+messages:
+  command:
+    no-permission: "{prefix}<#ff5c7a>You don't have permission to do that."
+    player-only: "{prefix}<#ff5c7a>Only players can use this."
+    unknown: "{prefix}<#ff5c7a>Unknown command. <#a1a1aa>Use <#e4e4e7><click:run_command:'/{label} help'>/{label} help</click></#e4e4e7>."
+    unknown-sub: "{prefix}<#ff5c7a>Unknown command. <#a1a1aa>Use <#e4e4e7><click:run_command:'/{label} help {category}'>/{label} help {category}</click></#e4e4e7>."
+    usage: "{prefix}<#a1a1aa>Usage: <#e4e4e7>{usage}"
+    error: "{prefix}<#ff5c7a>Something went wrong - check the console."
+    invalid-number: "{prefix}<#ff5c7a>'{input}' is not a valid number."
+    player-offline: "{prefix}<#ff5c7a>{player} is not online."
+    player-unknown: "{prefix}<#ff5c7a>{player} has never played here."
+    unknown-star: "{prefix}<#ff5c7a>Unknown star '{star}'. <#71717a>({stars})"
+    info:
+      - ""
+      - "  <gradient:#a855f7:#22d3ee><bold>✦ CosmicSMP</bold></gradient> <#71717a>v{version}"
+      - "  <#a1a1aa>Stars loaded: <#e4e4e7>{stars}"
+      - "  <#a1a1aa>Modules: <#e4e4e7>{modules}"
+      - ""
+
+  brightness:
+    gained:
+      actionbar: "<gradient:#fde68a:#f59e0b><bold>{delta} BRIGHTNESS</bold></gradient> <#52525b>│</#52525b> {brightness_bar}"
+      title: {title: "", subtitle: "<gradient:#fde68a:#f59e0b>✦ {delta} Brightness ✦</gradient>", fade-in: 5, stay: 30, fade-out: 10}
+      sound: "block.amethyst_block.resonate 1 1.6"
+    lost:
+      actionbar: "<#ff5c7a><bold>{delta} BRIGHTNESS</bold> <#52525b>│</#52525b> {brightness_bar}"
+      title: {title: "", subtitle: "<#ff5c7a>✦ {delta} Brightness ✦", fade-in: 5, stay: 30, fade-out: 10}
+      sound: "block.respawn_anchor.deplete 0.8 1.4"
+    anti-farm: "{prefix}<#a1a1aa>You already harvested <#e4e4e7>{victim}</#e4e4e7>'s light recently - no brightness gained."
+    check-self:
+      - "{prefix}<#a1a1aa>Your brightness: {brightness_color}<bold>{brightness}</bold><#52525b>/{brightness_max}"
+      - "  {brightness_bar}"
+    check-other: "{prefix}<#e4e4e7>{player}<#a1a1aa>: {brightness_color}<bold>{brightness}</bold><#52525b>/{brightness_max}  {brightness_bar}"
+    top-header:
+      - ""
+      - "  <gradient:#fde68a:#f59e0b><bold>☀ BRIGHTEST PLAYERS</bold></gradient>"
+    top-line: "  <#71717a>#{rank} <#e4e4e7>{player} <#52525b>-</#52525b> {brightness_color}{brightness} ✦ <#71717a>· {kills} kills"
+    admin-set: "{prefix}<#a1a1aa>Brightness of <#e4e4e7>{player}</#e4e4e7> is now <#fde68a>{brightness}</#fde68a>."
+
+  perks:
+    dash-cooldown: "<#a1a1aa>Dash recharging <#fca5a5>{time}"
+
+  death-ban:
+    broadcast:
+      chat: ["{prefix}<#ff5c7a>✦ <#e4e4e7>{player}</#e4e4e7>'s light has gone out. <#71717a>(death banned: {duration})"]
+      sound: "entity.wither.death 0.4 1.6"
+
+  stars:
+    purchased:
+      chat: ["{prefix}<#86efac>You bought {star}<#86efac>! <#71717a>(-{price} ✦ · now {brightness})"]
+      title: {title: "<gradient:#fde68a:#a855f7:#22d3ee><bold>STAR ACQUIRED</bold></gradient>", subtitle: "{star}", fade-in: 8, stay: 50, fade-out: 15}
+    purchased-broadcast: "{prefix}<#e4e4e7>{player}</#e4e4e7> <#a1a1aa>claimed {star} <#a1a1aa>for the first time."
+    passive-unlocked:
+      chat: ["{prefix}<#86efac>Passive unlocked: <#e4e4e7>{ability}</#e4e4e7> <#71717a>(-{cost} ✦)"]
+      title: {title: "", subtitle: "<#86efac>✔ {ability}", fade-in: 5, stay: 35, fade-out: 10}
+    primary-unlocked:
+      chat: ["{prefix}<#86efac>Primary unlocked: <#e4e4e7>{ability}</#e4e4e7> <#71717a>(-{cost} ✦)", "  <#71717a>Hold the star: <#e4e4e7>Right-click</#e4e4e7> to cast · <#e4e4e7>F</#e4e4e7> to switch"]
+      title: {title: "", subtitle: "<#86efac>✔ {ability}", fade-in: 5, stay: 35, fade-out: 10}
+    evaporated:
+      chat: ["{prefix}<#c084fc>Your stars evaporated into the void... <#71717a>({count} lost - rebuy them at the merchant, no stock needed)"]
+    soulbound: "<#ff5c7a>Stars are bound to your soul."
+    visit-merchant: "{prefix}<#a1a1aa>Visit the <gradient:#a855f7:#22d3ee>Galactic Merchant</gradient> to buy this."
+    hold-star: "{prefix}<#ff5c7a>Hold a star in your main hand."
+    recovered: "{prefix}<#86efac>Your star items were checked and restored."
+    recover-no-space: "{prefix}<#ff5c7a>No space for {star}<#ff5c7a>! Free a slot and use /cosmic stars recover."
+    list-header: ["", "  <gradient:#a855f7:#22d3ee><bold>✦ STARS</bold></gradient>"]
+    list-line: "  {star} <#52525b>·</#52525b> <#fde68a>{price} ✦</#fde68a> <#52525b>·</#52525b> <#a1a1aa>stock {stock}</#a1a1aa> {state}"
+    info-header: ["", "  {star} <#52525b>·</#52525b> <#fde68a>{price} ✦</#fde68a> <#52525b>·</#52525b> <#a1a1aa>stock {stock}"]
+    info-line: "  <#22d3ee>›</#22d3ee> <#e4e4e7>{name}</#e4e4e7> <#71717a>({type} · {cost} ✦ · {cooldown})</#71717a> <#a1a1aa>{description}"
+    result:
+      success: ""
+      already-owned: "{prefix}<#a1a1aa>You already own {star}<#a1a1aa>."
+      not-owned: "{prefix}<#ff5c7a>Buy {star} <#ff5c7a>first."
+      out-of-stock: "{prefix}<#ff5c7a>{star} <#ff5c7a>is out of stock."
+      not-enough-brightness: "{prefix}<#ff5c7a>Not enough brightness. <#71717a>(needs {price} ✦)"
+      inventory-full: "{prefix}<#ff5c7a>Free a slot in your inventory first."
+      already-unlocked: "{prefix}<#a1a1aa>Already unlocked."
+      requires-previous: "{prefix}<#ff5c7a>Unlock the previous node of the tree first."
+      not-available: "{prefix}<#ff5c7a>That node doesn't exist."
+      cancelled: ""
+
+  abilities:
+    cast: "<#86efac>✦ <#e4e4e7>{ability}"
+    cooldown: "<#fca5a5>{ability} <#a1a1aa>recharging <#fca5a5>{time}"
+    no-target: "<#ff5c7a>No target in sight"
+    blocked: "<#ff5c7a>{ability} can't be used right now"
+    locked: "<#ff5c7a>{ability} is locked"
+    unavailable: "<#ff5c7a>{ability} is unavailable"
+    not-owned: "<#ff5c7a>You don't own this star"
+    none-unlocked: "<#a1a1aa>Unlock a primary of {star} <#a1a1aa>at the merchant"
+    disabled-world: "<#ff5c7a>Stars are silent in this world"
+    intangible: "<#c4b5fd>Your spirit can't act - return to your body!"
+    selected:
+      actionbar: "<#fde68a>▶ <bold>{ability}</bold> <#71717a>selected"
+      sound: "ui.button.click 0.5 1.8"
+    ride-remaining: "<#fde68a>✦ <#a1a1aa>{time}s left"
+    mirror-clone: "{prefix}<#c084fc>You now wear <#e4e4e7>{target}</#e4e4e7>'s face for {time}."
+    mirror-clone-end: "{prefix}<#a1a1aa>Your reflection fades."
+    astral-phase-victim:
+      title: {title: "<#c4b5fd><bold>PHASED</bold>", subtitle: "<#a1a1aa>Walk back into your body!", fade-in: 4, stay: 50, fade-out: 10}
+      sound: "entity.vex.ambient 1 0.5"
+
+  merchant:
+    spawned: "{prefix}<#86efac>Merchant <#e4e4e7>{id}</#e4e4e7> placed."
+    removed: "{prefix}<#86efac>Merchant <#e4e4e7>{id}</#e4e4e7> removed."
+    unknown: "{prefix}<#ff5c7a>No merchant '{id}'."
+    none-near: "{prefix}<#ff5c7a>No merchant within 16 blocks."
+    list-header: ["", "  <gradient:#a855f7:#22d3ee><bold>☄ MERCHANTS</bold></gradient> <#71717a>({count})"]
+    list-line: "  <#22d3ee>›</#22d3ee> <#e4e4e7><click:run_command:'/cosmic merchant tp {id}'><hover:show_text:'<#fde68a>Click to teleport'>{id}</hover></click></#e4e4e7> <#71717a>{world} {x} {y} {z}"
+
+  stock:
+    header: ["", "  <gradient:#a855f7:#22d3ee><bold>⚖ STOCK</bold></gradient>"]
+    line: "  {star} <#52525b>·</#52525b> <#e4e4e7>{stock}</#e4e4e7> <#71717a>(default {default})"
+    updated: "{prefix}<#86efac>Stock of {star} <#86efac>is now <#e4e4e7>{stock}</#e4e4e7>."
+    reset-all: "{prefix}<#86efac>All stock reset to defaults."
+    restocked:
+      chat: ["{prefix}<#c084fc>✦ The Galactic Merchant received new stars."]
+      sound: "block.beacon.power_select 0.6 1.8"
+
+  player:
+    info:
+      - ""
+      - "  <gradient:#a855f7:#22d3ee><bold>☺ {player}</bold></gradient> <#52525b>{uuid}"
+      - "  <#a1a1aa>Brightness: <#fde68a>{brightness}"
+      - "  <#a1a1aa>Stars: <#e4e4e7>{stars}"
+      - "  <#a1a1aa>Discovered: <#e4e4e7>{discovered}"
+      - "  <#a1a1aa>Kills / Deaths: <#e4e4e7>{kills} / {deaths}"
+      - "  <#a1a1aa>Death ban: <#e4e4e7>{banned}"
+    star-given: "{prefix}<#86efac>Gave {star} <#86efac>to <#e4e4e7>{player}</#e4e4e7>."
+    star-taken: "{prefix}<#86efac>Took {star} <#86efac>from <#e4e4e7>{player}</#e4e4e7>."
+    star-not-owned: "{prefix}<#ff5c7a>{player} doesn't own {star}<#ff5c7a> (or invalid node)."
+    unlocked: "{prefix}<#86efac>Unlocked <#e4e4e7>{ability}</#e4e4e7> for {player}."
+    cooldowns-cleared: "{prefix}<#86efac>Cooldowns of {player} cleared."
+    reset-confirm: "{prefix}<#ff5c7a>This wipes ALL cosmic data of {player}. <#a1a1aa>Run <#e4e4e7>/cosmic player reset {player} confirm</#e4e4e7>."
+    reset: "{prefix}<#86efac>{player}'s cosmic data was wiped."
+    unbanned: "{prefix}<#86efac>{player} was unbanned. Their brightness was reset."
+    not-banned: "{prefix}<#ff5c7a>{player} is not death banned."
+
+  admin:
+    reloaded: "{prefix}<#86efac>Reloaded in <#e4e4e7>{time}ms</#e4e4e7>."
+    saved: "{prefix}<#86efac>All data saved."
+    cleanup: "{prefix}<#86efac>Removed {count} orphan entities."
+    debug:
+      - ""
+      - "  <gradient:#a855f7:#22d3ee><bold>⚙ CosmicSMP v{version}</bold></gradient>"
+      - "  <#a1a1aa>Modules: <#e4e4e7>{modules}"
+      - "  <#a1a1aa>Stars: <#e4e4e7>{stars} <#52525b>·</#52525b> <#a1a1aa>Cached profiles: <#e4e4e7>{players}"
+      - "  <#a1a1aa>Effects: <#e4e4e7>{effects} <#52525b>·</#52525b> <#a1a1aa>Summons: <#e4e4e7>{summons} <#52525b>·</#52525b> <#a1a1aa>Temp entities: <#e4e4e7>{temp}"
+      - "  <#a1a1aa>Merchants (live/total): <#e4e4e7>{merchants}"
+      - "  <#a1a1aa>Hooks: <#e4e4e7>{hooks}"
+      - "  <#a1a1aa>JVM memory: <#e4e4e7>{memory}"

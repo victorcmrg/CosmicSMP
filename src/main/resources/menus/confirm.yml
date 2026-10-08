@@ -1,0 +1,37 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                        CONFIRM  ·  menu (9x6)                      ║
+# ╚══════════════════════════════════════════════════════════════════╝
+# Special actions: confirm | cancel. Placeholders: {what} {cost} {after} + the usual player ones.
+
+title: "<#a1a1aa>Confirm · {what}"
+open-sound: "block.note_block.pling 0.6 1.6"
+click-sound: "ui.button.click 0.4 1.6"
+
+display-slots: [13]
+
+items:
+  background:
+    slots: ["0-53"]
+    material: BLACK_STAINED_GLASS_PANE
+    name: " "
+    hide-tooltip: true
+  summary:
+    slot: 31
+    material: GLOWSTONE_DUST
+    name: "<#fde68a><bold>Cost: {cost} ✦"
+    lore:
+      - "<#71717a>Brightness now    {brightness_color}{brightness}"
+      - "<#71717a>Brightness after  <#e4e4e7>{after}"
+  confirm:
+    slots: [37, 38, 39, 46, 47, 48]
+    material: LIME_STAINED_GLASS_PANE
+    name: "<#86efac><bold>✔ CONFIRM"
+    lore:
+      - "<#a1a1aa>Spend <#fde68a>{cost} ✦</#fde68a> on {what}"
+    actions: ["confirm"]
+    click-sound: "entity.experience_orb.pickup 0.8 1.2"
+  cancel:
+    slots: [41, 42, 43, 50, 51, 52]
+    material: RED_STAINED_GLASS_PANE
+    name: "<#ff5c7a><bold>✖ CANCEL"
+    actions: ["cancel"]

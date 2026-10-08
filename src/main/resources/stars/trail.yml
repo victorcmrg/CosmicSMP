@@ -1,0 +1,118 @@
+# ╔══════════════════════════════════════════════════════════════════╗
+# ║                            TRAIL STAR                              ║
+# ╚══════════════════════════════════════════════════════════════════╝
+# See sonic.yml for the documentation of every field.
+
+id: trail
+enabled: true
+order: 2
+display-name: "<gradient:#ef4444:#f97316><bold>Trail Star</bold></gradient>"
+color: "#f97316"
+price: 6
+stock: 5
+merchant-slot: 15
+model: ""
+description:
+  - "<#a1a1aa>A shard of the Alien Dragon's flight,"
+  - "<#a1a1aa>still burning with its trail."
+
+item:
+  material: BLAZE_POWDER
+  name: "{star_name}"
+  glow: true
+  lore:
+    - "{description}"
+    - ""
+    - "{abilities}"
+    - ""
+    - "<#71717a>Right-click <#a1a1aa>cast · <#71717a>F <#a1a1aa>switch"
+    - "<#52525b>Bound to {owner}"
+
+icon:
+  material: BLAZE_POWDER
+
+passive:
+  ability: no_fall
+  name: "<#f97316>Wings of the Trail"
+  cost: 2
+  description:
+    - "<#a1a1aa>You take no fall damage."
+  icon:
+    material: FEATHER
+
+primaries:
+  1:
+    ability: dragon_fists
+    name: "<#f97316>Alien Dragon Fists"
+    cost: 5
+    cooldown: 20
+    description:
+      - "<#a1a1aa>Two colossal dragon fists fall from"
+      - "<#a1a1aa>the sky and slam the area (4 hearts)."
+    icon:
+      material: MAGMA_CREAM
+    settings:
+      range: 22
+      radius: 3.0
+      damage: 8.0              # 4 hearts
+      knockback: 0.9
+      knockback-vertical: 0.6
+      fist-scale: 2.4
+      fist-item:               # use itemsadder:cosmic:dragon_fist for the 3D model
+        material: MAGMA_BLOCK
+      sounds:
+        cast: "entity.ender_dragon.growl 0.9 1.4"
+        impact: "entity.generic.explode 1.2 1.2"
+      particles:
+        warning: {type: DUST, color: "#ef4444", size: 1.2}
+  2:
+    ability: dragon_breath
+    name: "<#f97316>Dragon's Breath Fireball"
+    cost: 3
+    cooldown: 15
+    description:
+      - "<#a1a1aa>Hurl a fireball of dragon's breath"
+      - "<#a1a1aa>that explodes for 6 hearts."
+    icon:
+      material: DRAGON_BREATH
+    settings:
+      speed: 1.3
+      max-range: 40
+      radius: 3.5
+      damage: 12.0             # 6 hearts
+      knockback: 0.8
+      linger-ticks: 40
+      linger-damage: 0
+      projectile-scale: 1.4
+      projectile-item:
+        material: DRAGON_BREATH
+      sounds:
+        cast: "entity.ender_dragon.shoot 1.2 1.0"
+        impact: "entity.dragon_fireball.explode 1.4 1.0"
+      particles:
+        trail: {type: DRAGON_BREATH, count: 3, offset: 0.12, speed: 0.01, power: 1.0}
+        trail-secondary: {type: REVERSE_PORTAL, count: 2, offset: 0.1, speed: 0.02}
+  3:
+    ability: dragon_ride
+    name: "<#f97316>Ride the Alien Dragon"
+    cost: 5
+    cooldown: 75
+    description:
+      - "<#a1a1aa>Mount the Alien Dragon and fly for"
+      - "<#a1a1aa>10 seconds. Steer with your view."
+    icon:
+      material: DRAGON_HEAD
+    settings:
+      duration-seconds: 10
+      speed: 0.85
+      mob: PHANTOM             # placeholder mount (or mythic:AlienDragon)
+      scale: 3.0
+      models:
+        dragon: ""             # BetterModel id, e.g. alien_dragon
+      sounds:
+        cast: "entity.ender_dragon.growl 1.2 1.1"
+        flap: "entity.ender_dragon.flap 0.9 1.2"
+        end: "entity.phantom.death 0.8 0.6"
+      particles:
+        trail: {type: DRAGON_BREATH, count: 2, offset: 0.4, speed: 0.01, power: 1.0}
+        embers: {type: FLAME, count: 1, offset: 0.3, speed: 0.01}

@@ -1,0 +1,115 @@
+name: CosmicSMP
+version: '${project.version}'
+main: com.cosmicsmp.CosmicSMP
+api-version: '1.21.10'
+description: '${project.description}'
+authors: [CosmicSMP]
+website: https://cosmicsmp.com
+softdepend: [ItemsAdder, MythicMobs, BetterModel, PlaceholderAPI]
+load: POSTWORLD
+
+commands:
+  cosmic:
+    description: Cosmic SMP main command
+    usage: /cosmic help
+    aliases: [cosmicsmp, csmp, cs]
+
+permissions:
+  # ------------------------------------------------------------ everyone (non-op players)
+  cosmicsmp.player:
+    description: Everything a regular player needs.
+    default: true
+    children:
+      cosmicsmp.command.help: true
+      cosmicsmp.command.menu: true
+      cosmicsmp.command.stars: true
+      cosmicsmp.command.brightness: true
+      cosmicsmp.command.brightness.top: true
+      cosmicsmp.merchant.use: true
+      cosmicsmp.ability.use: true
+      cosmicsmp.perk.speed: true
+      cosmicsmp.perk.dash: true
+
+  cosmicsmp.command.help:
+    description: /cosmic help and /cosmic info
+    default: true
+  cosmicsmp.command.menu:
+    description: /cosmic menu (profile)
+    default: true
+  cosmicsmp.command.stars:
+    description: /cosmic stars list|info|tree|recover
+    default: true
+  cosmicsmp.command.brightness:
+    description: /cosmic brightness check (self)
+    default: true
+  cosmicsmp.command.brightness.top:
+    description: /cosmic brightness top
+    default: true
+  cosmicsmp.merchant.use:
+    description: Talk to the Galactic Merchant
+    default: true
+  cosmicsmp.ability.use:
+    description: Cast star abilities
+    default: true
+  cosmicsmp.perk.speed:
+    description: Receive the Speed perk at high brightness
+    default: true
+  cosmicsmp.perk.dash:
+    description: Use the Dash perk at max brightness
+    default: true
+
+  # ------------------------------------------------------------ staff (op)
+  cosmicsmp.admin:
+    description: Every administrative feature.
+    default: op
+    children:
+      cosmicsmp.player: true
+      cosmicsmp.command.brightness.others: true
+      cosmicsmp.admin.brightness: true
+      cosmicsmp.admin.merchant: true
+      cosmicsmp.admin.stock: true
+      cosmicsmp.admin.player: true
+      cosmicsmp.admin.reload: true
+      cosmicsmp.admin.debug: true
+      cosmicsmp.merchant.remote: true
+
+  cosmicsmp.command.brightness.others:
+    description: Check other players' brightness
+    default: op
+  cosmicsmp.admin.brightness:
+    description: /cosmic brightness set|give|take
+    default: op
+  cosmicsmp.admin.merchant:
+    description: /cosmic merchant spawn|remove|list|tp|open
+    default: op
+  cosmicsmp.admin.stock:
+    description: /cosmic stock ... and the stock editor menu
+    default: op
+  cosmicsmp.admin.player:
+    description: /cosmic player info|givestar|takestar|unlock|reset|unban|clearcooldowns
+    default: op
+  cosmicsmp.admin.reload:
+    description: /cosmic admin reload|save|cleanup
+    default: op
+  cosmicsmp.admin.debug:
+    description: /cosmic admin debug
+    default: op
+  cosmicsmp.merchant.remote:
+    description: Buy from the merchant menus without standing at a merchant
+    default: op
+
+  # ------------------------------------------------------------ bypasses (never given by default, not even to ops)
+  cosmicsmp.bypass.cooldown:
+    description: Ignore ability and dash cooldowns
+    default: false
+  cosmicsmp.bypass.deathban:
+    description: Never get death banned
+    default: false
+
+  cosmicsmp.*:
+    description: All CosmicSMP permissions including bypasses.
+    default: false
+    children:
+      cosmicsmp.admin: true
+      cosmicsmp.bypass.cooldown: true
+      cosmicsmp.bypass.deathban: true
