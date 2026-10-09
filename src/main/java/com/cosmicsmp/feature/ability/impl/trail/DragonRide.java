@@ -65,6 +65,8 @@ public final class DragonRide implements Ability {
         private final double speed;
         private final ParticleSpec wings;
         private final ParticleSpec embers;
+        private final java.util.List<Integer> countdown;
+        private int lastAnnounced = -1;
 
         Ride(AbilityContext ctx, Entity mount, int duration) {
             super(ctx, duration);
@@ -72,6 +74,8 @@ public final class DragonRide implements Ability {
             this.speed = ctx.def().num("speed", 0.85);
             this.wings = ctx.def().particle("trail", new ParticleSpec(Particle.DRAGON_BREATH, 2, 0.4, 0.1, 0.4, 0.01, 1.0f));
             this.embers = ctx.def().particle("embers", ParticleSpec.of(Particle.FLAME, 1, 0.3, 0.01));
+            this.countdown = ctx.def().settings().isList("chat-countdown")
+                    ? ctx.def().settings().getIntegerList("chat-countdown") : java.util.List.of(10, 5, 3, 2, 1);
         }
 
         @Override
@@ -108,10 +112,11 @@ public final class DragonRide implements Ability {
             if (age % 12 == 0) {
                 def.sound("flap", SoundSpec.of("entity.ender_dragon.flap", 0.9f, 1.2f)).play(next);
             }
-            if (age % 20 == 0) {
-                ctx.plugin().hud().hold(caster, 1100);
-                ctx.plugin().messages().actionBar(caster, "abilities.ride-remaining",
-                        Placeholders.of("time", Math.max(0, (maxTicksLeft()) / 20)));
+            // chat countdown at the configured seconds (e.g. 10, 5, 3, 2, 1)
+            int seconds = (maxTicksLeft() + 19) / 20;
+            if (seconds > 0 && seconds != lastAnnounced && countdown.contains(seconds)) {
+                lastAnnounced = seconds;
+                ctx.plugin().messages().send(caster, "abilities.dragon-ride-countdown", Placeholders.of("time", seconds));
             }
         }
 

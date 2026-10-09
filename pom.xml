@@ -6,7 +6,7 @@
 
     <groupId>com.cosmicsmp</groupId>
     <artifactId>CosmicSMP</artifactId>
-    <version>1.0.1</version>
+    <version>1.0.2</version>
     <packaging>jar</packaging>
 
     <name>CosmicSMP</name>

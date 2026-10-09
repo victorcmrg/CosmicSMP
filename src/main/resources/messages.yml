@@ -236,6 +236,7 @@ messages:
       actionbar: "<#fde68a>▶ <bold>{ability}</bold> <#71717a>selected"
       sound: "ui.button.click 0.5 1.8"
     ride-remaining: "<#fde68a>✦ <#a1a1aa>{time}s left"
+    dragon-ride-countdown: "{prefix}<#f97316>✦</#f97316> <#a1a1aa>Alien Dragon ride: <#fde68a><bold>{time}s</bold></#fde68a> <#a1a1aa>left"
     mirror-clone: "{prefix}<#c084fc>You now wear <#e4e4e7>{target}</#e4e4e7>'s face for {time}."
     mirror-clone-end: "{prefix}<#a1a1aa>Your reflection fades."
     astral-phase-victim:

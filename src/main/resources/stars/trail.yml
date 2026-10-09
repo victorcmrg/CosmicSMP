@@ -104,6 +104,7 @@ primaries:
       material: DRAGON_HEAD
     settings:
       duration-seconds: 10
+      chat-countdown: [10, 5, 3, 2, 1]   # seconds left at which a chat message is sent ([] = none)
       speed: 0.85
       mob: PHANTOM             # placeholder mount (or mythic:AlienDragon)
       scale: 3.0
