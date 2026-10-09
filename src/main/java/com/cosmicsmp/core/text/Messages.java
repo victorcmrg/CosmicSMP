@@ -134,7 +134,11 @@ public final class Messages {
         }
         for (String line : entry.chat) {
             if (!line.isEmpty()) {
-                Bukkit.getServer().sendMessage(Text.parse(apply(line, ph)));
+                net.kyori.adventure.text.Component component = Text.parse(apply(line, ph));
+                Bukkit.getConsoleSender().sendMessage(component);
+                for (Player player : Bukkit.getOnlinePlayers()) {
+                    player.sendMessage(component);
+                }
             }
         }
         for (Player player : Bukkit.getOnlinePlayers()) {

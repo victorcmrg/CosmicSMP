@@ -81,6 +81,8 @@ stars:
   # Re-create deleted default files in stars/ on start / reload (delete a file to reset it to the default).
   # To remove a default star for good, set "enabled: false" inside its file instead of deleting it.
   restore-default-files: true
+  # Show the selected ability's cooldown as the native sweep animation on the star item.
+  item-cooldown-overlay: true
   ability-targets:
     players: true
     mobs: true

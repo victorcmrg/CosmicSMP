@@ -34,10 +34,17 @@ public final class StarItemService {
         ItemMeta meta = item.getItemMeta();
         meta.getPersistentDataContainer().set(Keys.STAR_ID, PersistentDataType.STRING, star.id());
         meta.getPersistentDataContainer().set(Keys.STAR_OWNER, PersistentDataType.STRING, owner.getUniqueId().toString());
-        UseCooldownComponent cooldown = meta.getUseCooldown();
-        cooldown.setCooldownSeconds(1.0f);
-        cooldown.setCooldownGroup(Keys.starCooldownGroup(star.id()));
-        meta.setUseCooldown(cooldown);
+        meta.setMaxStackSize(1); // copies can never stack into one slot
+        if (plugin.settings().itemCooldownOverlay) {
+            try {
+                UseCooldownComponent cooldown = meta.getUseCooldown();
+                cooldown.setCooldownSeconds(1.0f);
+                cooldown.setCooldownGroup(Keys.starCooldownGroup(star.id()));
+                meta.setUseCooldown(cooldown);
+            } catch (UnsupportedOperationException ignored) {
+                // cosmetic only (client cooldown sweep); never block giving the star
+            }
+        }
         item.setItemMeta(meta);
         item.setAmount(1);
         return item;
@@ -177,6 +184,10 @@ public final class StarItemService {
             if (!data.owns(id) || plugin.stars().get(id) == null || !player.getUniqueId().equals(owner) || !seen.add(id)) {
                 inventory.setItem(i, null);
                 changed = true;
+            } else if (contents[i].getAmount() > 1) {
+                contents[i].setAmount(1);
+                inventory.setItem(i, contents[i]);
+                changed = true;
             }
         }
         if (plugin.settings().autoRestoreItems) {
@@ -204,12 +215,16 @@ public final class StarItemService {
         PlayerData data = plugin.players().get(player);
         PlayerData.OwnedStar owned = data.star(starId);
         int slot = find(player, starId);
-        if (star == null || owned == null || slot < 0) {
+        if (star == null || owned == null || slot < 0 || !plugin.settings().itemCooldownOverlay) {
             return;
         }
         ItemStack item = player.getInventory().getContents()[slot];
         AbilityDefinition def = owned.selected == 0 ? null : star.ability(owned.selected);
         long left = def == null ? 0 : plugin.cooldowns().remainingMillis(data, def.key());
-        player.setCooldown(item, (int) Math.min(Integer.MAX_VALUE, left / 50L));
+        try {
+            player.setCooldown(item, (int) Math.min(Integer.MAX_VALUE, left / 50L));
+        } catch (UnsupportedOperationException ignored) {
+            // cosmetic only
+        }
     }
 }

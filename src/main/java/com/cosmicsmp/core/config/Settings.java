@@ -70,6 +70,7 @@ public final class Settings {
     public TreeMode treeMode;
     public boolean starAnimation;
     public boolean restoreDefaultStars;
+    public boolean itemCooldownOverlay;
 
     // controls
     public CycleControl cycleControl;
@@ -151,6 +152,7 @@ public final class Settings {
         treeMode = enumValue(TreeMode.class, c.getString("stars.skill-tree-mode"), TreeMode.FREE);
         starAnimation = c.getBoolean("stars.purchase-animation", true);
         restoreDefaultStars = c.getBoolean("stars.restore-default-files", true);
+        itemCooldownOverlay = c.getBoolean("stars.item-cooldown-overlay", true);
 
         cycleControl = enumValue(CycleControl.class, c.getString("controls.cycle-ability"), CycleControl.SWAP_HAND);
         castThrottleMillis = Math.max(50, c.getLong("controls.click-throttle-ms", 200));

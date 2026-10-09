@@ -51,7 +51,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  * Boot order: configs -> hooks -> engines (effects, temp entities, data) -> content (stars, menus) -> services ->
  * modules -> commands. Shutdown runs in reverse and flushes every byte of data synchronously.
  */
-public final class CosmicSMP extends JavaPlugin {
+public class CosmicSMP extends JavaPlugin {
 
     private Settings settings;
     private Messages messages;

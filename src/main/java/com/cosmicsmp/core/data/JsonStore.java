@@ -61,7 +61,8 @@ public final class JsonStore {
 
     public static void write(Path file, String json) throws IOException {
         Files.createDirectories(file.getParent());
-        Path tmp = sibling(file, ".tmp");
+        // unique temp name: two writers can never clobber each other's temp file
+        Path tmp = sibling(file, ".tmp" + Thread.currentThread().threadId() + "-" + System.nanoTime());
         byte[] bytes = json.getBytes(StandardCharsets.UTF_8);
         try (FileChannel channel = FileChannel.open(tmp, StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING, StandardOpenOption.WRITE)) {
             ByteBuffer buffer = ByteBuffer.wrap(bytes);

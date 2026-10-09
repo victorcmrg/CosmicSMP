@@ -13,10 +13,16 @@ Paper plugin for **Cosmic SMP Season 3**: the **Galactic Merchant**, five **Star
 
 ```bash
 mvn clean package
-# -> target/CosmicSMP-1.0.0.jar
+# -> target/CosmicSMP-<version>.jar  (runs the automated tests first)
 ```
 
-Drop the jar in `plugins/`, start the server once, then edit the generated files.
+The test suite (`src/test`) boots the whole plugin on a simulated Paper 1.21.10 server (MockBukkit): default
+files, star file restore, purchases, stock, unlocks, evaporation/rebuy and anti-dupe. Skip with `-DskipTests`.
+
+When updating, **remove the old `CosmicSMP-*.jar`** from `plugins/` — the console prints the running version on start.
+
+Drop the jar in `plugins/`, start the server once, then edit the generated files. Deleting a default file in
+`stars/` resets it to the default on the next start / `/cosmic admin reload`.
 
 ---
 

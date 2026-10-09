@@ -134,7 +134,8 @@ public final class MenuManager implements Listener {
 
     public void closeAll() {
         for (Player player : Bukkit.getOnlinePlayers()) {
-            if (player.getOpenInventory().getTopInventory().getHolder(false) instanceof CosmicMenu) {
+            org.bukkit.inventory.Inventory top = player.getOpenInventory().getTopInventory();
+            if (top != null && top.getHolder(false) instanceof CosmicMenu) {
                 player.closeInventory();
             }
         }

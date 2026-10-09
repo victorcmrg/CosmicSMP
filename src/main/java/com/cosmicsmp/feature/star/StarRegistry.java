@@ -29,8 +29,9 @@ public final class StarRegistry {
 
     public void load() {
         File folder = new File(plugin.getDataFolder(), "stars");
-        if (!folder.exists() || plugin.settings().restoreDefaultStars) {
-            restoreMissingDefaults(folder);
+        boolean firstRun = !folder.exists();
+        if (firstRun || plugin.settings().restoreDefaultStars) {
+            restoreMissingDefaults(folder, firstRun);
         }
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".yml"));
         List<StarDefinition> loaded = new ArrayList<>();
@@ -65,7 +66,7 @@ public final class StarRegistry {
      * the same id (e.g. the file was renamed). To remove a default star for good use {@code enabled: false} in its file,
      * or turn off {@code stars.restore-default-files} in config.yml.
      */
-    private void restoreMissingDefaults(File folder) {
+    private void restoreMissingDefaults(File folder, boolean firstRun) {
         java.util.Set<String> declared = new java.util.HashSet<>();
         File[] existing = folder.listFiles((dir, name) -> name.endsWith(".yml"));
         if (existing != null) {
@@ -81,7 +82,9 @@ public final class StarRegistry {
         for (String id : DEFAULTS) {
             if (!declared.contains(id) && plugin.getResource("stars/" + id + ".yml") != null) {
                 plugin.saveResource("stars/" + id + ".yml", false);
-                plugin.getLogger().info("Restored missing default star file stars/" + id + ".yml");
+                if (!firstRun) {
+                    plugin.getLogger().info("Restored missing default star file stars/" + id + ".yml");
+                }
             }
         }
     }
