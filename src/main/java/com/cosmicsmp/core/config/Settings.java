@@ -69,6 +69,7 @@ public final class Settings {
     public boolean targetMobs;
     public TreeMode treeMode;
     public boolean starAnimation;
+    public boolean restoreDefaultStars;
 
     // controls
     public CycleControl cycleControl;
@@ -149,6 +150,7 @@ public final class Settings {
         targetMobs = c.getBoolean("stars.ability-targets.mobs", true);
         treeMode = enumValue(TreeMode.class, c.getString("stars.skill-tree-mode"), TreeMode.FREE);
         starAnimation = c.getBoolean("stars.purchase-animation", true);
+        restoreDefaultStars = c.getBoolean("stars.restore-default-files", true);
 
         cycleControl = enumValue(CycleControl.class, c.getString("controls.cycle-ability"), CycleControl.SWAP_HAND);
         castThrottleMillis = Math.max(50, c.getLong("controls.click-throttle-ms", 200));

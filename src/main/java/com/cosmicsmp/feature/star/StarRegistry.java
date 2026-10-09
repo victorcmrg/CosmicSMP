@@ -29,10 +29,8 @@ public final class StarRegistry {
 
     public void load() {
         File folder = new File(plugin.getDataFolder(), "stars");
-        if (!folder.exists()) {
-            for (String id : DEFAULTS) {
-                plugin.saveResource("stars/" + id + ".yml", false);
-            }
+        if (!folder.exists() || plugin.settings().restoreDefaultStars) {
+            restoreMissingDefaults(folder);
         }
         File[] files = folder.listFiles((dir, name) -> name.endsWith(".yml"));
         List<StarDefinition> loaded = new ArrayList<>();
@@ -60,6 +58,32 @@ public final class StarRegistry {
         }
         stars = Collections.unmodifiableMap(map);
         plugin.getLogger().info("Loaded " + stars.size() + " stars: " + String.join(", ", stars.keySet()));
+    }
+
+    /**
+     * Re-creates any default star file that was deleted. A default is only skipped when another file already declares
+     * the same id (e.g. the file was renamed). To remove a default star for good use {@code enabled: false} in its file,
+     * or turn off {@code stars.restore-default-files} in config.yml.
+     */
+    private void restoreMissingDefaults(File folder) {
+        java.util.Set<String> declared = new java.util.HashSet<>();
+        File[] existing = folder.listFiles((dir, name) -> name.endsWith(".yml"));
+        if (existing != null) {
+            for (File file : existing) {
+                String fileId = file.getName().substring(0, file.getName().length() - 4).toLowerCase(Locale.ROOT);
+                declared.add(fileId);
+                String id = org.bukkit.configuration.file.YamlConfiguration.loadConfiguration(file).getString("id");
+                if (id != null) {
+                    declared.add(id.toLowerCase(Locale.ROOT));
+                }
+            }
+        }
+        for (String id : DEFAULTS) {
+            if (!declared.contains(id) && plugin.getResource("stars/" + id + ".yml") != null) {
+                plugin.saveResource("stars/" + id + ".yml", false);
+                plugin.getLogger().info("Restored missing default star file stars/" + id + ".yml");
+            }
+        }
     }
 
     /** Upgrades untouched default lore from older versions (custom lore is left alone). */

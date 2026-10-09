@@ -78,6 +78,9 @@ stars:
   # FREE = buy any node in any order. SEQUENTIAL = passive -> primary 1 -> 2 -> 3.
   skill-tree-mode: FREE
   purchase-animation: true
+  # Re-create deleted default files in stars/ on start / reload (delete a file to reset it to the default).
+  # To remove a default star for good, set "enabled: false" inside its file instead of deleting it.
+  restore-default-files: true
   ability-targets:
     players: true
     mobs: true
